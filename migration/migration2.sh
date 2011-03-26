@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
     
 gcc prog.c -o 1.out                                                   
 time ./1.out &                                                                             
