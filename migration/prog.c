@@ -4,7 +4,7 @@
 int main()
 {
         int size=1000;
-	int matr[1000][1000];	
+	int matr[size][size];	
 	int k,i,j;
 	for(k=0;k<size;k++)
 		for(i=0;i<size;i++)

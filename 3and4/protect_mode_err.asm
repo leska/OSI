@@ -6,6 +6,8 @@ x:
 	xor	ax,ax
 	mov	es,ax
 	mov	ds,ax
+	mov	ss,ax
+	mov	sp,ax
 
 	mov	ah, 2
 	mov	al, 5
