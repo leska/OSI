@@ -20,7 +20,7 @@ static void *thread_counter(void *args) {
 	for(array[id]=0; array[id]<ITER_NUM; array[id]++);
 	pthread_exit(NULL);
 }
-int main()
+int main(int argc, char**argv)
 {
 	cpu_set_t cpu0, cpu1;
 	int dist;
