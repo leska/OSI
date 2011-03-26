@@ -2,32 +2,33 @@
 #include <stdlib.h>
 #define MAXNUMBERS 100000
 
-void die(char * message){
-	printf("%s", message);
-	exit(1);
-}
 int arr[MAXNUMBERS], count;
-
+int err=0;
 int main(int argc, char** argv) {
 	int i,j,t, readed, writed;
-
-	if (argc < 2)
-		die("malo faylow");
 	count = 0;
-
+	
+	if (argc < 3)
+		{
+		err=1;goto sw;
+		}
 	for(i = 1; i < argc-1; i++){	
 		FILE * f = fopen(argv[i], "r");
 		if (!f)
-			die("Bad");
+			{
+			err=2;goto sw;
+			}
 		while (!feof(f)){
 			readed = fscanf(f, "%d", &arr[count++]);
-			if (readed <= 0){
+			if (readed == 0){
 				fclose(f);
-				die("v fayle kaka");
+				err=3;goto sw;
 			}
+			else if (readed == EOF)
+				count--;
 			if (count >= MAXNUMBERS){
 				fclose(f);
-				die("U menya ne hvataet pamati");
+				err=4; goto sw;
 			}
 		}
 		fclose(f);
@@ -43,15 +44,37 @@ int main(int argc, char** argv) {
 		}
 	FILE * fout = fopen(argv[argc-1], "w");
 	if (!fout)
-		die("WTF");
+		{
+		err=5;goto sw;
+		}
+	
 	for(i = 0; i < count; i++){
 		writed = fprintf(fout, "%d\n", arr[i]);
 		if (writed < 0){
 			fclose(fout);
-			die("ne shmogla zapisat");
+			err=6; goto sw;
 		}
 	}
 	fclose(fout);
-	die("All Ok");
-	return 0;
+
+sw:
+switch(err)
+{
+case 0:
+	printf("All ok");break;
+case 1:
+	printf("malo faylow");break;
+case 2:
+	printf("Bad");break;
+case 3:
+	printf("v fayle kaka");break;
+case 4:
+	printf("U menya ne hvataet pamati");break;
+case 5:
+	printf("WTF");break;
+case 6:
+	printf("ne shmogla zapisat");break;
+}
+	return err;
+
 }
