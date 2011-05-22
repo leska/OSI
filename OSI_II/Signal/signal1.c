@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include <signal.h>
 #include <stdlib.h>
+#include <string.h>
 
 char info[100];
 
 void func(int i, siginfo_t *c,void * v)
 {
-fputs(info,stderr);
+write(1, info, strlen(info));
+//fputs(info,stderr);
 if(i==2)
 	exit(0);
 }
@@ -15,7 +17,8 @@ if(i==2)
 int main ()
 {
 	sprintf(info, "PID: %d; GID: %d\n", getpid(), getpgid(getpid()));
-	fputs(info, stderr);
+	//fputs(info, stderr);
+	write(1, info, strlen(info));
 
 struct sigaction sa;
 
@@ -26,8 +29,9 @@ sigfillset(&sa.sa_mask);
 
 int i;
 for(i=1; i< 32; i++)
-{
-sigaction(i, &sa, 0);
+{if(i!=9 && i!=19){
+if(sigaction(i, &sa, 0)==-1)
+	printf("Error:%d\n",i);}
 }
 
 while(1) sleep(1)
