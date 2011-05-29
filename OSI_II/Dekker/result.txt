@@ -1,0 +1,15 @@
+[s0154@um32 ~]$ gcc -D_GNU_SOURCE -O3 -lpthread dek.c -o dek && time ./dek
+20000000
+real    0m10.389s
+user    0m7.650s
+sys     0m0.021s
+[s0154@um32 ~]$ gcc -D_GNU_SOURCE -O0 -lpthread dek.c -o dek && time ./dek
+20000000
+real    0m8.430s
+user    0m6.019s
+sys     0m0.022s
+[s0154@um32 ~]$ gcc -D_GNU_SOURCE -O4 -lpthread dek.c -o dek && time ./dek
+20000000
+real    0m8.706s
+user    0m6.349s
+sys     0m0.023s
